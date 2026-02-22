@@ -1,0 +1,279 @@
+name: StudAI Career - Build & Deploy
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  PHP_VERSION: '8.2'
+  NODE_VERSION: '20'
+  AZURE_WEBAPP_NAME: studai-app-prod
+  AZURE_WORKERS_NAME: studai-workers-prod
+
+jobs:
+  # ============================================
+  # JOB 1: Build & Test
+  # ============================================
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: studai_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      redis:
+        image: redis:6
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, pdo_mysql, redis, gd, zip, bcmath, intl, xml
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install npm dependencies & build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare Laravel environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run PHP syntax check
+        run: find app -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: Run tests
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: studai_test
+          DB_USERNAME: root
+          DB_PASSWORD: password
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
+          CACHE_STORE: redis
+          QUEUE_CONNECTION: sync
+          SESSION_DRIVER: redis
+        run: php artisan test
+
+      - name: Prepare deployment artifact
+        run: |
+          rm -rf tests node_modules .env .env.example
+          rm -rf .git .github .editorconfig .gitattributes
+          zip -r deploy.zip . \
+            -x ".git/*" \
+            -x "tests/*" \
+            -x "node_modules/*" \
+            -x ".github/*" \
+            -x "*.md" \
+            -x ".editorconfig" \
+            -x ".gitignore" \
+            -x ".gitattributes"
+
+      - name: Upload deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: deploy.zip
+          retention-days: 1
+
+  # ============================================
+  # JOB 2: Deploy to Dev Slot
+  # ============================================
+  deploy-dev:
+    name: Deploy to Dev Slot
+    needs: build
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://studai-app-prod-dev.azurewebsites.net
+
+    steps:
+      - name: Download deployment artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Dev Slot
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: dev
+          package: deploy.zip
+
+      - name: Post-deployment restart
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az webapp restart \
+              --resource-group studai-career \
+              --name ${{ env.AZURE_WEBAPP_NAME }} \
+              --slot dev
+
+      - name: Health Check (Dev)
+        run: |
+          echo "Waiting for deployment to stabilize..."
+          sleep 30
+          for i in {1..5}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              https://studai-app-prod-dev.azurewebsites.net/up)
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check passed (attempt $i)"
+              exit 0
+            fi
+            echo "Health check attempt $i failed (HTTP $STATUS), retrying..."
+            sleep 10
+          done
+          echo "Health check failed after 5 attempts"
+          exit 1
+
+  # ============================================
+  # JOB 3: Deploy to Production (via slot swap)
+  # ============================================
+  deploy-production:
+    name: Deploy to Production
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://studaicareer.com
+
+    steps:
+      - name: Download deployment artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy to dev slot first for zero-downtime swap
+      - name: Deploy to Staging Slot (pre-swap)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: dev
+          package: deploy.zip
+
+      - name: Warm up staging slot
+        run: |
+          echo "Warming up staging slot..."
+          sleep 30
+          for i in {1..5}; do
+            curl -s -o /dev/null \
+              https://studai-app-prod-dev.azurewebsites.net/up
+            sleep 5
+          done
+
+      # Zero-downtime deployment via slot swap
+      - name: Swap Dev slot to Production
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az webapp deployment slot swap \
+              --resource-group studai-career \
+              --name ${{ env.AZURE_WEBAPP_NAME }} \
+              --slot dev \
+              --target-slot production
+
+      # Deploy to workers separately (Horizon + Scheduler)
+      - name: Deploy Workers
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WORKERS_NAME }}
+          package: deploy.zip
+
+      - name: Restart Workers (Horizon)
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az webapp restart \
+              --resource-group studai-career \
+              --name ${{ env.AZURE_WORKERS_NAME }}
+
+      - name: Health Check (Production)
+        run: |
+          echo "Waiting for production stabilization..."
+          sleep 30
+          for i in {1..10}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              https://studai-app-prod.azurewebsites.net/up)
+            if [ "$STATUS" = "200" ]; then
+              echo "Production health check passed!"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $STATUS, retrying..."
+            sleep 10
+          done
+          echo "CRITICAL: Production health check failed!"
+          exit 1
+
+      - name: Notify Sentry of release
+        if: success()
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        run: |
+          if [ -n "$SENTRY_AUTH_TOKEN" ]; then
+            curl -sL https://sentry.io/get-cli/ | bash
+            sentry-cli releases new "${{ github.sha }}"
+            sentry-cli releases set-commits "${{ github.sha }}" --auto
+            sentry-cli releases finalize "${{ github.sha }}"
+            sentry-cli releases deploys "${{ github.sha }}" new -e production
+          else
+            echo "Sentry auth token not configured, skipping release notification"
+          fi

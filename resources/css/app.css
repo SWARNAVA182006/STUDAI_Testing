@@ -1,0 +1,1304 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   STUDAI CAREER - DESIGN SYSTEM CSS
+   Google-inspired, Material Design 4.0, Linear/Superhuman Minimalism
+   ============================================ */
+
+/* ============================================
+   FONTS
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Google Sans fallback (Inter as primary) */
+@layer base {
+    :root {
+        /* ========================================
+           CSS CUSTOM PROPERTIES
+           ======================================== */
+        
+        /* Colors */
+        --color-primary: #1A73E8;
+        --color-primary-hover: #1967D2;
+        --color-primary-light: #E8F0FE;
+        --color-secondary: #0B57D0;
+        
+        --color-success: #34A853;
+        --color-success-light: #E6F4EA;
+        --color-warning: #FBBC05;
+        --color-warning-light: #FEF7E0;
+        --color-error: #EA4335;
+        --color-error-light: #FCE8E6;
+        
+        --color-surface: #FFFFFF;
+        --color-surface-subtle: #F8F9FA;
+        --color-surface-muted: #F1F3F4;
+        --color-border: #DADCE0;
+        --color-border-light: #E8EAED;
+        
+        --color-text-primary: #202124;
+        --color-text-secondary: #5F6368;
+        --color-text-tertiary: #80868B;
+        --color-text-disabled: #9AA0A6;
+        
+        /* Spacing */
+        --spacing-section: 80px;
+        --spacing-section-mobile: 48px;
+        --gutter: 24px;
+        --gutter-mobile: 16px;
+        
+        /* Border Radius */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-xl: 16px;
+        --radius-2xl: 20px;
+        --radius-full: 9999px;
+        
+        /* Shadows */
+        --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+        --shadow-md: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+        --shadow-lg: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+        --shadow-xl: 0 2px 3px 0 rgba(60, 64, 67, 0.3), 0 6px 10px 4px rgba(60, 64, 67, 0.15);
+        
+        /* Transitions */
+        --transition-fast: 0.15s ease;
+        --transition-base: 0.2s ease;
+        --transition-slow: 0.3s ease;
+        
+        /* Z-Index Scale */
+        --z-dropdown: 1000;
+        --z-sticky: 1020;
+        --z-fixed: 1030;
+        --z-modal-backdrop: 1040;
+        --z-modal: 1050;
+        --z-popover: 1060;
+        --z-tooltip: 1070;
+        --z-toast: 1080;
+    }
+
+    /* Dark mode variables */
+    .dark {
+        --color-surface: #1F1F1F;
+        --color-surface-subtle: #2D2D2D;
+        --color-surface-muted: #3D3D3D;
+        --color-border: #5F6368;
+        --color-border-light: #4D4D4D;
+        
+        --color-text-primary: #E8EAED;
+        --color-text-secondary: #9AA0A6;
+        --color-text-tertiary: #80868B;
+        --color-text-disabled: #5F6368;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--color-text-primary);
+        background-color: var(--color-surface);
+    }
+
+    /* Improved focus styles */
+    *:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    /* Selection styling */
+    ::selection {
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+    }
+}
+
+/* ============================================
+   LAYOUT SYSTEM
+   ============================================ */
+@layer components {
+    /* Container widths */
+    .container-narrow {
+        @apply max-w-3xl mx-auto px-4 sm:px-6;
+    }
+
+    .container-default {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .container-wide {
+        @apply max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12;
+    }
+
+    /* 12-column grid */
+    .grid-12 {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: var(--gutter);
+    }
+
+    @media (max-width: 768px) {
+        .grid-12 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: var(--gutter-mobile);
+        }
+    }
+
+    /* Section spacing */
+    .section {
+        padding-top: var(--spacing-section);
+        padding-bottom: calc(var(--spacing-section) / 2);
+    }
+
+    @media (max-width: 768px) {
+        .section {
+            padding-top: var(--spacing-section-mobile);
+            padding-bottom: calc(var(--spacing-section-mobile) / 2);
+        }
+    }
+}
+
+/* ============================================
+   CARD SYSTEM
+   ============================================ */
+@layer components {
+    /* Base card */
+    .studai-card {
+        @apply bg-white rounded-xl border border-surface-200 transition-all duration-200;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .studai-card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+    }
+
+    /* Card variations */
+    .studai-card-flat {
+        @apply bg-white rounded-xl border border-surface-200;
+    }
+
+    .studai-card-elevated {
+        @apply bg-white rounded-xl transition-all duration-200;
+        box-shadow: var(--shadow-md);
+    }
+
+    .studai-card-elevated:hover {
+        box-shadow: var(--shadow-xl);
+        transform: translateY(-4px);
+    }
+
+    .studai-card-interactive {
+        @apply studai-card cursor-pointer;
+    }
+
+    .studai-card-interactive:active {
+        transform: scale(0.98);
+    }
+
+    /* Glass card */
+    .studai-card-glass {
+        @apply rounded-xl backdrop-blur-xl border border-white/20;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Card padding variants */
+    .card-padding-sm {
+        @apply p-4;
+    }
+
+    .card-padding-md {
+        @apply p-6;
+    }
+
+    .card-padding-lg {
+        @apply p-8;
+    }
+}
+
+/* ============================================
+   BUTTON SYSTEM
+   ============================================ */
+@layer components {
+    /* Base button */
+    .studai-btn {
+        @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-150 cursor-pointer;
+        @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    /* Size variants */
+    .studai-btn-xs {
+        @apply px-2.5 py-1 text-xs;
+    }
+
+    .studai-btn-sm {
+        @apply px-3 py-1.5 text-sm;
+    }
+
+    .studai-btn-md {
+        @apply px-4 py-2 text-sm;
+    }
+
+    .studai-btn-lg {
+        @apply px-6 py-2.5 text-base;
+    }
+
+    .studai-btn-xl {
+        @apply px-8 py-3 text-base;
+    }
+
+    /* Primary button */
+    .studai-btn-primary {
+        @apply bg-google-blue-600 text-white hover:bg-google-blue-700;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .studai-btn-primary:hover:not(:disabled) {
+        box-shadow: var(--shadow-md);
+    }
+
+    .studai-btn-primary:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+
+    /* Secondary button */
+    .studai-btn-secondary {
+        @apply bg-canvas-subtle text-google-blue-600 border border-surface-300;
+        @apply hover:bg-google-blue-50 hover:border-google-blue-600;
+    }
+
+    /* Ghost button */
+    .studai-btn-ghost {
+        @apply bg-transparent text-ink-secondary hover:bg-surface-100;
+    }
+
+    /* Outlined button */
+    .studai-btn-outline {
+        @apply bg-transparent border border-surface-300 text-ink-primary;
+        @apply hover:bg-surface-50 hover:border-surface-400;
+    }
+
+    /* Danger button */
+    .studai-btn-danger {
+        @apply bg-google-red-500 text-white hover:bg-google-red-600;
+    }
+
+    /* Success button */
+    .studai-btn-success {
+        @apply bg-google-green-500 text-white hover:bg-google-green-600;
+    }
+
+    /* Icon button */
+    .studai-btn-icon {
+        @apply p-2 rounded-lg hover:bg-surface-100;
+    }
+
+    .studai-btn-icon-sm {
+        @apply p-1.5 rounded-md;
+    }
+
+    .studai-btn-icon-lg {
+        @apply p-3 rounded-xl;
+    }
+
+    /* FAB (Floating Action Button) */
+    .studai-fab {
+        @apply fixed bottom-6 right-6 w-14 h-14 rounded-full bg-google-blue-600 text-white;
+        @apply flex items-center justify-center;
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 
+                    0 6px 10px 0 rgba(0, 0, 0, 0.14), 
+                    0 1px 18px 0 rgba(0, 0, 0, 0.12);
+        z-index: var(--z-fixed);
+    }
+
+    .studai-fab:hover {
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 
+                    0 8px 10px 1px rgba(0, 0, 0, 0.14), 
+                    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* ============================================
+   INPUT SYSTEM
+   ============================================ */
+@layer components {
+    /* Base input */
+    .studai-input {
+        @apply w-full px-4 py-2.5 text-sm bg-white border border-surface-300 rounded-lg;
+        @apply placeholder:text-ink-tertiary;
+        @apply focus:outline-none focus:border-google-blue-600;
+        @apply transition-all duration-150;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .studai-input:focus {
+        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Input sizes */
+    .studai-input-sm {
+        @apply px-3 py-1.5 text-xs;
+    }
+
+    .studai-input-lg {
+        @apply px-5 py-3 text-base;
+    }
+
+    /* Search input (Google-style) */
+    .studai-search {
+        @apply w-full px-12 py-3.5 text-base bg-white rounded-full border border-surface-300;
+        @apply placeholder:text-ink-tertiary;
+        @apply focus:outline-none focus:border-transparent;
+        @apply transition-all duration-200;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .studai-search:hover {
+        box-shadow: var(--shadow-md);
+    }
+
+    .studai-search:focus {
+        box-shadow: var(--shadow-lg);
+        border-color: transparent;
+    }
+
+    /* Search container */
+    .studai-search-container {
+        @apply relative;
+    }
+
+    .studai-search-icon {
+        @apply absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary;
+    }
+
+    .studai-search-clear {
+        @apply absolute right-4 top-1/2 -translate-y-1/2 text-ink-tertiary hover:text-ink-secondary cursor-pointer;
+    }
+
+    /* Textarea */
+    .studai-textarea {
+        @apply studai-input min-h-[120px] resize-y;
+    }
+
+    /* Select */
+    .studai-select {
+        @apply studai-input appearance-none bg-no-repeat;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%235F6368' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+        background-position: right 12px center;
+        background-size: 20px;
+        padding-right: 40px;
+    }
+
+    /* Checkbox & Radio */
+    .studai-checkbox {
+        @apply w-5 h-5 rounded border-2 border-surface-400 text-google-blue-600;
+        @apply focus:ring-2 focus:ring-google-blue-100 focus:ring-offset-0;
+    }
+
+    .studai-radio {
+        @apply w-5 h-5 border-2 border-surface-400 text-google-blue-600;
+        @apply focus:ring-2 focus:ring-google-blue-100 focus:ring-offset-0;
+    }
+
+    /* Toggle/Switch */
+    .studai-toggle {
+        @apply relative inline-flex h-6 w-11 items-center rounded-full;
+        @apply bg-surface-300 transition-colors duration-200;
+    }
+
+    .studai-toggle[data-state="checked"] {
+        @apply bg-google-blue-600;
+    }
+
+    .studai-toggle-thumb {
+        @apply inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200;
+        @apply translate-x-1;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .studai-toggle[data-state="checked"] .studai-toggle-thumb {
+        @apply translate-x-6;
+    }
+
+    /* Input with icon */
+    .studai-input-icon-left {
+        @apply pl-10;
+    }
+
+    .studai-input-icon-right {
+        @apply pr-10;
+    }
+
+    /* Input group */
+    .studai-input-group {
+        @apply flex;
+    }
+
+    .studai-input-group .studai-input {
+        @apply rounded-l-none first:rounded-l-lg last:rounded-r-lg;
+    }
+
+    .studai-input-addon {
+        @apply px-4 flex items-center bg-surface-100 border border-surface-300 text-ink-secondary text-sm;
+        @apply first:rounded-l-lg first:border-r-0 last:rounded-r-lg last:border-l-0;
+    }
+}
+
+/* ============================================
+   CHIP/TAG SYSTEM
+   ============================================ */
+@layer components {
+    .studai-chip {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full;
+        @apply transition-all duration-150;
+    }
+
+    .studai-chip-default {
+        @apply bg-surface-100 text-ink-secondary;
+    }
+
+    .studai-chip-primary {
+        @apply bg-google-blue-50 text-google-blue-600;
+    }
+
+    .studai-chip-success {
+        @apply bg-google-green-50 text-google-green-600;
+    }
+
+    .studai-chip-warning {
+        @apply bg-google-yellow-50 text-google-yellow-700;
+    }
+
+    .studai-chip-error {
+        @apply bg-google-red-50 text-google-red-600;
+    }
+
+    .studai-chip-purple {
+        @apply bg-ai-purple-light text-ai-purple-dark;
+    }
+
+    /* Interactive chip */
+    .studai-chip-interactive {
+        @apply cursor-pointer hover:shadow-sm;
+    }
+
+    /* Chip with close button */
+    .studai-chip-close {
+        @apply ml-1 -mr-1 p-0.5 rounded-full hover:bg-black/10;
+    }
+
+    /* AI chip */
+    .studai-chip-ai {
+        @apply px-3 py-1 text-xs font-medium rounded-full;
+        background: linear-gradient(135deg, rgba(26, 115, 232, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+        color: #7C3AED;
+    }
+}
+
+/* ============================================
+   SIDEBAR NAVIGATION
+   ============================================ */
+@layer components {
+    .studai-sidebar {
+        @apply fixed left-0 top-0 h-screen w-[280px] bg-white border-r border-surface-200;
+        @apply flex flex-col;
+        z-index: var(--z-sticky);
+    }
+
+    .studai-sidebar-collapsed {
+        @apply w-[72px];
+    }
+
+    .studai-sidebar-header {
+        @apply h-16 px-4 flex items-center gap-3 border-b border-surface-100;
+    }
+
+    .studai-sidebar-content {
+        @apply flex-1 overflow-y-auto py-4 scrollbar-thin;
+    }
+
+    .studai-sidebar-footer {
+        @apply p-4 border-t border-surface-100;
+    }
+
+    /* Nav items */
+    .studai-nav-item {
+        @apply flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm font-medium;
+        @apply text-ink-secondary transition-all duration-150;
+        @apply hover:bg-surface-100 hover:text-ink-primary;
+    }
+
+    .studai-nav-item.active {
+        @apply bg-google-blue-50 text-google-blue-600;
+    }
+
+    .studai-nav-item-icon {
+        @apply w-5 h-5 flex-shrink-0;
+    }
+
+    /* Nav section */
+    .studai-nav-section {
+        @apply px-4 py-2;
+    }
+
+    .studai-nav-section-title {
+        @apply text-xs font-semibold text-ink-tertiary uppercase tracking-wider mb-2;
+    }
+
+    /* Collapsed state */
+    .studai-sidebar-collapsed .studai-nav-item {
+        @apply px-0 justify-center mx-2;
+    }
+
+    .studai-sidebar-collapsed .studai-nav-item span {
+        @apply hidden;
+    }
+}
+
+/* ============================================
+   TOP BAR / HEADER
+   ============================================ */
+@layer components {
+    .studai-topbar {
+        @apply fixed top-0 right-0 left-[280px] h-16 bg-white border-b border-surface-200;
+        @apply flex items-center justify-between px-6;
+        z-index: var(--z-sticky);
+    }
+
+    .studai-topbar-collapsed {
+        @apply left-[72px];
+    }
+
+    .studai-topbar-search {
+        @apply w-full max-w-xl;
+    }
+
+    .studai-topbar-actions {
+        @apply flex items-center gap-2;
+    }
+}
+
+/* ============================================
+   SCORE & PROGRESS COMPONENTS
+   ============================================ */
+@layer components {
+    /* Score circle */
+    .studai-score-circle {
+        @apply relative inline-flex items-center justify-center;
+    }
+
+    .studai-score-circle-ring {
+        @apply transform -rotate-90;
+    }
+
+    .studai-score-circle-bg {
+        @apply stroke-surface-200;
+    }
+
+    .studai-score-circle-progress {
+        @apply transition-all duration-500 ease-out;
+        stroke-linecap: round;
+    }
+
+    .studai-score-circle-text {
+        @apply absolute inset-0 flex flex-col items-center justify-center;
+    }
+
+    /* Progress bar */
+    .studai-progress {
+        @apply w-full h-2 bg-surface-200 rounded-full overflow-hidden;
+    }
+
+    .studai-progress-bar {
+        @apply h-full bg-google-blue-600 rounded-full transition-all duration-500 ease-out;
+    }
+
+    .studai-progress-success .studai-progress-bar {
+        @apply bg-google-green-500;
+    }
+
+    .studai-progress-warning .studai-progress-bar {
+        @apply bg-google-yellow-500;
+    }
+
+    .studai-progress-error .studai-progress-bar {
+        @apply bg-google-red-500;
+    }
+
+    /* AI Score badge */
+    .studai-ai-score {
+        @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold;
+        background: linear-gradient(135deg, rgba(26, 115, 232, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    }
+
+    .studai-ai-score-excellent {
+        @apply text-google-green-600;
+    }
+
+    .studai-ai-score-good {
+        @apply text-google-blue-600;
+    }
+
+    .studai-ai-score-average {
+        @apply text-google-yellow-700;
+    }
+
+    .studai-ai-score-poor {
+        @apply text-google-red-600;
+    }
+}
+
+/* ============================================
+   MODAL SYSTEM
+   ============================================ */
+@layer components {
+    .studai-modal-backdrop {
+        @apply fixed inset-0 bg-black/50 backdrop-blur-sm;
+        z-index: var(--z-modal-backdrop);
+    }
+
+    .studai-modal {
+        @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+        @apply bg-white rounded-2xl shadow-xl;
+        @apply w-full max-h-[90vh] overflow-hidden;
+        z-index: var(--z-modal);
+    }
+
+    .studai-modal-sm {
+        @apply max-w-md;
+    }
+
+    .studai-modal-md {
+        @apply max-w-lg;
+    }
+
+    .studai-modal-lg {
+        @apply max-w-2xl;
+    }
+
+    .studai-modal-xl {
+        @apply max-w-4xl;
+    }
+
+    .studai-modal-header {
+        @apply flex items-center justify-between px-6 py-4 border-b border-surface-200;
+    }
+
+    .studai-modal-title {
+        @apply text-lg font-semibold text-ink-primary;
+    }
+
+    .studai-modal-close {
+        @apply p-2 rounded-lg hover:bg-surface-100 text-ink-tertiary hover:text-ink-primary;
+        @apply transition-colors duration-150;
+    }
+
+    .studai-modal-body {
+        @apply px-6 py-5 overflow-y-auto;
+        max-height: calc(90vh - 140px);
+    }
+
+    .studai-modal-footer {
+        @apply flex items-center justify-end gap-3 px-6 py-4 border-t border-surface-200;
+    }
+}
+
+/* ============================================
+   DROPDOWN MENU
+   ============================================ */
+@layer components {
+    .studai-dropdown {
+        @apply absolute bg-white rounded-xl border border-surface-200 py-2;
+        @apply opacity-0 invisible transform scale-95 origin-top-right;
+        @apply transition-all duration-150;
+        box-shadow: var(--shadow-lg);
+        z-index: var(--z-dropdown);
+    }
+
+    .studai-dropdown.open {
+        @apply opacity-100 scale-100;
+        visibility: visible;
+    }
+
+    .studai-dropdown-item {
+        @apply flex items-center gap-3 px-4 py-2.5 text-sm text-ink-primary;
+        @apply hover:bg-surface-100 cursor-pointer transition-colors duration-150;
+    }
+
+    .studai-dropdown-item-icon {
+        @apply w-5 h-5 text-ink-tertiary;
+    }
+
+    .studai-dropdown-divider {
+        @apply my-2 border-t border-surface-200;
+    }
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+@layer components {
+    .studai-tabs {
+        @apply flex border-b border-surface-200;
+    }
+
+    .studai-tab {
+        @apply px-4 py-3 text-sm font-medium text-ink-secondary;
+        @apply border-b-2 border-transparent -mb-px;
+        @apply hover:text-ink-primary hover:border-surface-300;
+        @apply transition-all duration-150 cursor-pointer;
+    }
+
+    .studai-tab.active {
+        @apply text-google-blue-600 border-google-blue-600;
+    }
+
+    .studai-tab-content {
+        @apply py-6;
+    }
+
+    /* Pills tabs */
+    .studai-tabs-pills {
+        @apply flex gap-2 p-1 bg-surface-100 rounded-xl;
+    }
+
+    .studai-tab-pill {
+        @apply px-4 py-2 text-sm font-medium text-ink-secondary rounded-lg;
+        @apply hover:text-ink-primary;
+        @apply transition-all duration-150 cursor-pointer;
+    }
+
+    .studai-tab-pill.active {
+        @apply bg-white text-ink-primary shadow-sm;
+    }
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+@layer components {
+    .studai-toast-container {
+        @apply fixed bottom-6 right-6 flex flex-col gap-3;
+        z-index: var(--z-toast);
+    }
+
+    .studai-toast {
+        @apply flex items-start gap-3 min-w-[320px] max-w-md p-4 bg-white rounded-xl;
+        @apply animate-slide-up;
+        box-shadow: var(--shadow-xl);
+    }
+
+    .studai-toast-icon {
+        @apply w-5 h-5 flex-shrink-0 mt-0.5;
+    }
+
+    .studai-toast-content {
+        @apply flex-1;
+    }
+
+    .studai-toast-title {
+        @apply text-sm font-medium text-ink-primary;
+    }
+
+    .studai-toast-message {
+        @apply text-sm text-ink-secondary mt-0.5;
+    }
+
+    .studai-toast-close {
+        @apply p-1 rounded-lg hover:bg-surface-100 text-ink-tertiary;
+    }
+
+    /* Toast variants */
+    .studai-toast-success .studai-toast-icon {
+        @apply text-google-green-500;
+    }
+
+    .studai-toast-error .studai-toast-icon {
+        @apply text-google-red-500;
+    }
+
+    .studai-toast-warning .studai-toast-icon {
+        @apply text-google-yellow-600;
+    }
+
+    .studai-toast-info .studai-toast-icon {
+        @apply text-google-blue-500;
+    }
+}
+
+/* ============================================
+   TOOLTIP
+   ============================================ */
+@layer components {
+    .studai-tooltip {
+        @apply absolute px-3 py-2 text-xs font-medium text-white bg-ink-primary rounded-lg;
+        @apply opacity-0 invisible transform scale-95;
+        @apply transition-all duration-150;
+        z-index: var(--z-tooltip);
+    }
+
+    .studai-tooltip.visible {
+        @apply opacity-100 scale-100;
+        visibility: visible;
+    }
+
+    .studai-tooltip::after {
+        content: '';
+        @apply absolute w-2 h-2 bg-ink-primary rotate-45;
+    }
+
+    .studai-tooltip-bottom::after {
+        @apply -top-1 left-1/2 -translate-x-1/2;
+    }
+
+    .studai-tooltip-top::after {
+        @apply -bottom-1 left-1/2 -translate-x-1/2;
+    }
+}
+
+/* ============================================
+   AVATAR
+   ============================================ */
+@layer components {
+    .studai-avatar {
+        @apply relative inline-flex items-center justify-center rounded-full bg-surface-200 overflow-hidden;
+    }
+
+    .studai-avatar-xs {
+        @apply w-6 h-6 text-xs;
+    }
+
+    .studai-avatar-sm {
+        @apply w-8 h-8 text-sm;
+    }
+
+    .studai-avatar-md {
+        @apply w-10 h-10 text-base;
+    }
+
+    .studai-avatar-lg {
+        @apply w-12 h-12 text-lg;
+    }
+
+    .studai-avatar-xl {
+        @apply w-16 h-16 text-xl;
+    }
+
+    .studai-avatar-2xl {
+        @apply w-24 h-24 text-2xl;
+    }
+
+    .studai-avatar-img {
+        @apply w-full h-full object-cover;
+    }
+
+    .studai-avatar-initials {
+        @apply font-medium text-ink-secondary;
+    }
+
+    /* Avatar with status indicator */
+    .studai-avatar-status {
+        @apply absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white;
+    }
+
+    .studai-avatar-status-online {
+        @apply bg-google-green-500;
+    }
+
+    .studai-avatar-status-offline {
+        @apply bg-surface-400;
+    }
+
+    .studai-avatar-status-busy {
+        @apply bg-google-red-500;
+    }
+
+    /* Avatar group */
+    .studai-avatar-group {
+        @apply flex -space-x-2;
+    }
+
+    .studai-avatar-group .studai-avatar {
+        @apply ring-2 ring-white;
+    }
+}
+
+/* ============================================
+   BADGE
+   ============================================ */
+@layer components {
+    .studai-badge {
+        @apply inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full;
+    }
+
+    .studai-badge-default {
+        @apply bg-surface-200 text-ink-secondary;
+    }
+
+    .studai-badge-primary {
+        @apply bg-google-blue-100 text-google-blue-700;
+    }
+
+    .studai-badge-success {
+        @apply bg-google-green-100 text-google-green-700;
+    }
+
+    .studai-badge-warning {
+        @apply bg-google-yellow-100 text-google-yellow-800;
+    }
+
+    .studai-badge-error {
+        @apply bg-google-red-100 text-google-red-700;
+    }
+
+    /* Dot badge */
+    .studai-badge-dot {
+        @apply w-2 h-2 rounded-full;
+    }
+
+    /* Count badge */
+    .studai-badge-count {
+        @apply min-w-[20px] h-5 px-1.5 text-xs font-bold rounded-full;
+        @apply flex items-center justify-center;
+    }
+}
+
+/* ============================================
+   SKELETON LOADING
+   ============================================ */
+@layer components {
+    .studai-skeleton {
+        @apply bg-surface-200 rounded animate-pulse;
+    }
+
+    .studai-skeleton-text {
+        @apply h-4 rounded;
+    }
+
+    .studai-skeleton-title {
+        @apply h-6 rounded w-3/4;
+    }
+
+    .studai-skeleton-avatar {
+        @apply rounded-full;
+    }
+
+    .studai-skeleton-card {
+        @apply rounded-xl;
+    }
+
+    /* Shimmer effect */
+    .studai-skeleton-shimmer {
+        @apply relative overflow-hidden;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+}
+
+/* ============================================
+   TABLE
+   ============================================ */
+@layer components {
+    .studai-table-container {
+        @apply overflow-x-auto rounded-xl border border-surface-200;
+    }
+
+    .studai-table {
+        @apply w-full text-sm;
+    }
+
+    .studai-table thead {
+        @apply bg-surface-50 border-b border-surface-200;
+    }
+
+    .studai-table th {
+        @apply px-4 py-3 text-left font-semibold text-ink-secondary uppercase tracking-wider text-xs;
+    }
+
+    .studai-table td {
+        @apply px-4 py-3 text-ink-primary;
+    }
+
+    .studai-table tbody tr {
+        @apply border-b border-surface-100 last:border-0;
+        @apply hover:bg-surface-50 transition-colors duration-150;
+    }
+
+    /* Striped table */
+    .studai-table-striped tbody tr:nth-child(even) {
+        @apply bg-surface-50;
+    }
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+@layer components {
+    .studai-empty-state {
+        @apply flex flex-col items-center justify-center py-16 px-8 text-center;
+    }
+
+    .studai-empty-state-icon {
+        @apply w-16 h-16 text-surface-400 mb-4;
+    }
+
+    .studai-empty-state-title {
+        @apply text-lg font-medium text-ink-primary mb-2;
+    }
+
+    .studai-empty-state-description {
+        @apply text-sm text-ink-secondary max-w-sm mb-6;
+    }
+}
+
+/* ============================================
+   JOB CARD SPECIFIC
+   ============================================ */
+@layer components {
+    .studai-job-card {
+        @apply studai-card p-5 cursor-pointer;
+    }
+
+    .studai-job-card:hover {
+        @apply border-google-blue-200;
+    }
+
+    .studai-job-card.selected {
+        @apply border-google-blue-500 bg-google-blue-50/30;
+    }
+
+    .studai-job-card-header {
+        @apply flex items-start justify-between gap-3 mb-3;
+    }
+
+    .studai-job-card-logo {
+        @apply w-12 h-12 rounded-lg bg-surface-100 flex items-center justify-center;
+        @apply overflow-hidden flex-shrink-0;
+    }
+
+    .studai-job-card-title {
+        @apply text-base font-semibold text-ink-primary line-clamp-2;
+    }
+
+    .studai-job-card-company {
+        @apply text-sm text-ink-secondary;
+    }
+
+    .studai-job-card-meta {
+        @apply flex flex-wrap items-center gap-2 mt-3 text-xs text-ink-tertiary;
+    }
+
+    .studai-job-card-match {
+        @apply studai-ai-score;
+    }
+
+    .studai-job-card-skills {
+        @apply flex flex-wrap gap-1.5 mt-3;
+    }
+
+    .studai-job-card-actions {
+        @apply flex items-center justify-between mt-4 pt-4 border-t border-surface-100;
+    }
+}
+
+/* ============================================
+   AGENT ACTIVITY FEED
+   ============================================ */
+@layer components {
+    .studai-activity-feed {
+        @apply space-y-4;
+    }
+
+    .studai-activity-item {
+        @apply flex gap-3 p-4 bg-surface-50 rounded-xl;
+    }
+
+    .studai-activity-icon {
+        @apply w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0;
+    }
+
+    .studai-activity-icon-ai {
+        background: linear-gradient(135deg, rgba(26, 115, 232, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+        @apply text-google-blue-600;
+    }
+
+    .studai-activity-content {
+        @apply flex-1;
+    }
+
+    .studai-activity-title {
+        @apply text-sm font-medium text-ink-primary;
+    }
+
+    .studai-activity-description {
+        @apply text-xs text-ink-secondary mt-0.5;
+    }
+
+    .studai-activity-time {
+        @apply text-xs text-ink-tertiary mt-1;
+    }
+}
+
+/* ============================================
+   STAT CARDS
+   ============================================ */
+@layer components {
+    .studai-stat-card {
+        @apply studai-card p-5;
+    }
+
+    .studai-stat-header {
+        @apply flex items-center justify-between mb-3;
+    }
+
+    .studai-stat-icon {
+        @apply w-10 h-10 rounded-xl flex items-center justify-center;
+    }
+
+    .studai-stat-value {
+        @apply text-2xl font-bold text-ink-primary;
+    }
+
+    .studai-stat-label {
+        @apply text-sm text-ink-secondary mt-1;
+    }
+
+    .studai-stat-change {
+        @apply flex items-center gap-1 text-xs font-medium mt-2;
+    }
+
+    .studai-stat-change-positive {
+        @apply text-google-green-600;
+    }
+
+    .studai-stat-change-negative {
+        @apply text-google-red-600;
+    }
+}
+
+/* ============================================
+   TIMELINE
+   ============================================ */
+@layer components {
+    .studai-timeline {
+        @apply relative pl-8;
+    }
+
+    .studai-timeline::before {
+        content: '';
+        @apply absolute left-3 top-0 bottom-0 w-0.5 bg-surface-200;
+    }
+
+    .studai-timeline-item {
+        @apply relative pb-6 last:pb-0;
+    }
+
+    .studai-timeline-dot {
+        @apply absolute -left-5 w-4 h-4 rounded-full bg-google-blue-500 border-4 border-white;
+        box-shadow: 0 0 0 2px theme('colors.surface.200');
+    }
+
+    .studai-timeline-dot-pending {
+        @apply bg-surface-300;
+    }
+
+    .studai-timeline-dot-success {
+        @apply bg-google-green-500;
+    }
+
+    .studai-timeline-content {
+        @apply ml-4;
+    }
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+@layer utilities {
+    /* Hide scrollbar but keep functionality */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Truncate with lines */
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Safe area padding for mobile */
+    .safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .safe-top {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    /* Glass effect */
+    .glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .glass-dark {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .studai-sidebar,
+    .studai-topbar,
+    .studai-fab {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    .studai-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+}

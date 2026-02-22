@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* StudAI Career Platform - Custom Filament Theme */
+
+/* Brand Colors - Pink/Purple Theme */
+:root {
+    --studai-pink: #ec4899;
+    --studai-purple: #a855f7;
+    --studai-green: #10b981;
+    --studai-blue: #3b82f6;
+    --studai-yellow: #f59e0b;
+    --studai-red: #ef4444;
+}
+
+/* Custom Sidebar Styling */
+.fi-sidebar {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+}
+
+.fi-sidebar-item-button:hover {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+}
+
+.fi-sidebar-item-button.fi-active {
+    background: linear-gradient(135deg, var(--studai-pink) 0%, var(--studai-purple) 100%);
+}
+
+/* Dashboard Stats Cards */
+.fi-stats-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(236, 72, 153, 0.1);
+    transition: all 0.3s ease;
+}
+
+.fi-stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(236, 72, 153, 0.1);
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+/* Custom Buttons */
+.fi-btn-primary {
+    background: linear-gradient(135deg, var(--studai-pink) 0%, var(--studai-purple) 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.fi-btn-primary:hover {
+    box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Table Styling */
+.fi-ta-table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.fi-ta-row:hover {
+    background: rgba(236, 72, 153, 0.03);
+}
+
+/* Form Styling */
+.fi-fo-field-wrp {
+    transition: all 0.3s ease;
+}
+
+.fi-fo-field-wrp:focus-within {
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+/* Badge Styling */
+.fi-badge {
+    border-radius: 9999px;
+    font-weight: 600;
+}
+
+.fi-badge-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--studai-green);
+}
+
+.fi-badge-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--studai-yellow);
+}
+
+.fi-badge-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--studai-red);
+}
+
+/* Navigation Group Headers */
+.fi-sidebar-group-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--studai-purple);
+    opacity: 0.8;
+}
+
+/* Widget Styling */
+.fi-wi-stats-overview {
+    gap: 1.5rem;
+}
+
+.fi-wi-stats-overview-stat {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(236, 72, 153, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(236, 72, 153, 0.15);
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+/* Chart Styling */
+.fi-wi-chart {
+    border-radius: 16px;
+    border: 1px solid rgba(236, 72, 153, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+/* Modal Styling */
+.fi-modal-window {
+    border-radius: 20px;
+    border: 2px solid rgba(236, 72, 153, 0.1);
+}
+
+.fi-modal-header {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+}
+
+/* Notification Styling */
+.fi-notification {
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.fi-notification-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(16, 185, 129, 0.9) 100%);
+}
+
+.fi-notification-warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(245, 158, 11, 0.9) 100%);
+}
+
+.fi-notification-danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(239, 68, 68, 0.9) 100%);
+}
+
+/* Global Search Styling */
+.fi-global-search-field {
+    border-radius: 12px;
+    border: 2px solid rgba(236, 72, 153, 0.2);
+    transition: all 0.3s ease;
+}
+
+.fi-global-search-field:focus {
+    border-color: var(--studai-pink);
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.1);
+}
+
+/* Loading State */
+.fi-loading-indicator {
+    background: linear-gradient(90deg, var(--studai-pink), var(--studai-purple), var(--studai-pink));
+    background-size: 200% 100%;
+    animation: gradient 2s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Action Button Groups */
+.fi-ac-btn-group {
+    gap: 0.5rem;
+}
+
+/* Tabs Styling */
+.fi-tabs-item {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.fi-tabs-item.fi-active {
+    background: linear-gradient(135deg, var(--studai-pink) 0%, var(--studai-purple) 100%);
+    color: white;
+}
+
+/* Dark Mode Support */
+.dark {
+    .fi-sidebar {
+        background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    }
+
+    .fi-stats-card,
+    .fi-wi-stats-overview-stat,
+    .fi-wi-chart {
+        background: linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%);
+        border-color: rgba(236, 72, 153, 0.2);
+    }
+}

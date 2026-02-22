@@ -1,0 +1,135 @@
+MIT License
+
+Copyright (c) 2025 StudAI Career Platform
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## Third-Party Licenses
+
+This software uses the following open-source packages, each with their own licenses:
+
+### Laravel Framework
+- License: MIT
+- Copyright: Taylor Otwell
+- URL: https://laravel.com
+
+### OpenAI PHP Client
+- License: MIT
+- Copyright: OpenAI PHP
+- URL: https://github.com/openai-php/laravel
+
+### Spatie Laravel Permission
+- License: MIT
+- Copyright: Spatie
+- URL: https://github.com/spatie/laravel-permission
+
+### Laravel Sanctum
+- License: MIT
+- Copyright: Taylor Otwell
+- URL: https://laravel.com/docs/sanctum
+
+### Meilisearch
+- License: MIT
+- Copyright: Meilisearch
+- URL: https://www.meilisearch.com
+
+### Redis
+- License: BSD 3-Clause
+- Copyright: Redis Labs
+- URL: https://redis.io
+
+### Tailwind CSS
+- License: MIT
+- Copyright: Tailwind Labs
+- URL: https://tailwindcss.com
+
+### Alpine.js
+- License: MIT
+- Copyright: Caleb Porzio
+- URL: https://alpinejs.dev
+
+### Laravel Horizon
+- License: MIT
+- Copyright: Taylor Otwell
+- URL: https://laravel.com/docs/horizon
+
+### Laravel Telescope
+- License: MIT
+- Copyright: Taylor Otwell
+- URL: https://laravel.com/docs/telescope
+
+## Payment Gateway Terms
+
+### Razorpay
+By using Razorpay integration, you agree to Razorpay's Terms of Service and Privacy Policy.
+- URL: https://razorpay.com/terms/
+
+### PayU
+By using PayU integration, you agree to PayU's Terms of Service and Privacy Policy.
+- URL: https://payu.in/terms-of-use
+
+## OpenAI API Usage
+
+This software integrates with OpenAI's API. By using this software with OpenAI integration:
+- You must comply with OpenAI's Terms of Use
+- You must comply with OpenAI's Usage Policies
+- You are responsible for API usage costs
+- URL: https://openai.com/policies
+
+## Data Privacy Notice
+
+This software processes personal data. When deploying:
+- You are responsible for GDPR compliance (if applicable)
+- You must implement proper data protection measures
+- You must provide privacy policy to users
+- You must obtain necessary consents for data processing
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+The authors and copyright holders:
+- Make no warranties about suitability for any purpose
+- Are not liable for any damages arising from use
+- Are not responsible for payment processing issues
+- Are not responsible for AI-generated content accuracy
+- Are not responsible for data security breaches
+
+## Commercial Use
+
+This software can be used for commercial purposes under the MIT license.
+However, you must:
+- Maintain the copyright notice
+- Include this license in distributed copies
+- Not use "StudAI" name or branding without permission
+- Comply with all third-party service terms
+
+## Support and Contributions
+
+This is open-source software. Support is provided on a best-effort basis.
+
+Contributions are welcome! See CONTRIBUTING.md for guidelines.
+
+---
+
+For questions about licensing, contact: legal@studai.com
+
+Last Updated: October 2025
